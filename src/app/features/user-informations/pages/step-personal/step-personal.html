@@ -1,4 +1,8 @@
-<div class="space-y-6">
+<form
+  class="space-y-6"
+  [formGroup]="_curriculumFormStore.personalFormGroup"
+  (ngSubmit)="goToProfissional()"
+>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="col-span-1 md:col-span-2">
       <label class="block text-sm font-medium text-zinc-300 mb-2">Nome Completo</label>
@@ -6,6 +10,7 @@
         type="text"
         placeholder="Seu nome aqui"
         class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
+        formControlName="name"
       />
     </div>
 
@@ -15,6 +20,7 @@
         type="email"
         placeholder="dev@rocketseat.com"
         class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
+        formControlName="email"
       />
     </div>
 
@@ -24,6 +30,7 @@
         type="number"
         placeholder="25"
         class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
+        formControlName="age"
       />
     </div>
 
@@ -33,6 +40,7 @@
         type="text"
         placeholder="Rua, Número, Bairro"
         class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
+        formControlName="address"
       />
     </div>
 
@@ -41,11 +49,12 @@
       <div class="relative">
         <select
           class="w-full appearance-none bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors cursor-pointer"
+          formControlName="state"
         >
           <option disabled selected>Selecione</option>
-          <option>São Paulo</option>
-          <option>Rio de Janeiro</option>
-          <option>Minas Gerais</option>
+          <option value="São Paulo">São Paulo</option>
+          <option value="Rio de Janeiro">Rio de Janeiro</option>
+          <option value="Minas Gerais">Minas Gerais</option>
         </select>
         <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500">
           <svg
@@ -70,10 +79,11 @@
       <div class="relative">
         <select
           class="w-full appearance-none bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors cursor-pointer"
+          formControlName="city"
         >
           <option disabled selected>Selecione</option>
-          <option>Capital</option>
-          <option>Interior</option>
+          <option value="Capital">Capital</option>
+          <option value="Interior">Interior</option>
         </select>
         <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500">
           <svg
@@ -98,7 +108,13 @@
     <label class="block text-sm font-medium text-zinc-300 mb-3">Estado Civil</label>
     <div class="grid grid-cols-3 gap-3">
       <label class="cursor-pointer group">
-        <input type="radio" name="civil" class="peer sr-only" />
+        <input
+          type="radio"
+          name="maritalStatus"
+          class="peer sr-only"
+          formControlName="maritalStatus"
+          value="solteiro"
+        />
         <div
           class="border border-zinc-800 bg-zinc-950 rounded-lg p-3 text-center text-sm text-zinc-400 peer-checked:border-violet-500 peer-checked:bg-violet-500/10 peer-checked:text-violet-300 transition-all group-hover:border-zinc-700"
         >
@@ -106,7 +122,13 @@
         </div>
       </label>
       <label class="cursor-pointer group">
-        <input type="radio" name="civil" class="peer sr-only" />
+        <input
+          type="radio"
+          name="maritalStatus"
+          class="peer sr-only"
+          formControlName="maritalStatus"
+          value="casado"
+        />
         <div
           class="border border-zinc-800 bg-zinc-950 rounded-lg p-3 text-center text-sm text-zinc-400 peer-checked:border-violet-500 peer-checked:bg-violet-500/10 peer-checked:text-violet-300 transition-all group-hover:border-zinc-700"
         >
@@ -114,7 +136,13 @@
         </div>
       </label>
       <label class="cursor-pointer group">
-        <input type="radio" name="civil" class="peer sr-only" />
+        <input
+          type="radio"
+          name="maritalStatus"
+          class="peer sr-only"
+          formControlName="maritalStatus"
+          value="divorciado"
+        />
         <div
           class="border border-zinc-800 bg-zinc-950 rounded-lg p-3 text-center text-sm text-zinc-400 peer-checked:border-violet-500 peer-checked:bg-violet-500/10 peer-checked:text-violet-300 transition-all group-hover:border-zinc-700"
         >
@@ -126,7 +154,7 @@
 
   <div class="flex justify-end pt-6 border-t border-zinc-800 mt-4">
     <button
-      routerLink="/professional"
+      type="submit"
       class="bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-lg font-bold text-sm tracking-wide transition-all flex items-center gap-2 shadow-lg shadow-violet-600/20 hover:shadow-violet-600/40 cursor-pointer"
     >
       PRÓXIMO PASSO
@@ -146,4 +174,4 @@
       </svg>
     </button>
   </div>
-</div>
+</form>
