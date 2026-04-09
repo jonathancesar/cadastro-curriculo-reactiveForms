@@ -52,9 +52,9 @@
           formControlName="state"
         >
           <option disabled selected>Selecione</option>
-          <option value="São Paulo">São Paulo</option>
-          <option value="Rio de Janeiro">Rio de Janeiro</option>
-          <option value="Minas Gerais">Minas Gerais</option>
+          @for (state of statesList(); track state.name) {
+            <option [value]="state.name">{{ state.name }}</option>
+          }
         </select>
         <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500">
           <svg
@@ -175,3 +175,6 @@
     </button>
   </div>
 </form>
+
+<button (click)="updateSelect()">ATUALIZAR</button>
+<p>{{ testeState() }}</p>
