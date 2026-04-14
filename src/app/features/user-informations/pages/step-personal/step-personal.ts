@@ -4,10 +4,12 @@ import { CurriculumFormStore } from '../../../../core/services/curriculum-form-s
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { StatesAndCitiesApi } from '../../../../core/services/states-and-cities-api';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
+import { tap } from 'rxjs';
+import { InputValidationDirective } from '../../../../shared/directives/input-validation-directive';
 
 @Component({
   selector: 'app-step-personal',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputValidationDirective],
   templateUrl: './step-personal.html',
 })
 export class StepPersonal {
@@ -19,13 +21,38 @@ export class StepPersonal {
     return this._curriculumFormStore.personalFormGroup.get('state') as FormControl;
   }
 
-  stateSelected = toSignal<string>(this.stateControl!.valueChanges, {
-    initialValue: this.stateControl!.value || '',
+  get cityControl() {
+    return this._curriculumFormStore.personalFormGroup.get('city') as FormControl;
+  }
+
+  selectedState = toSignal<string>(
+    this.stateControl!.valueChanges.pipe(
+      tap(() => {
+        this.cityControl.setValue('', { emitEvent: false });
+      }),
+    ),
+    {
+      initialValue: this.stateControl!.value || '',
+    },
+  );
+
+  citiesResource = rxResource({
+    params: () => {
+      const state = this.selectedState();
+
+      if (!state) return undefined;
+
+      return state;
+    },
+    stream: ({ params }) => this._statesAndCitiesApi.getCities(params),
   });
 
-  testeState = computed(() => {
-    console.log('Estado Selecionado:', this.stateSelected());
-    return '';
+  citiesList = computed(() => {
+    const ERROR_ON_RESPONSE = !!this.citiesResource.error();
+
+    if (ERROR_ON_RESPONSE) return [];
+
+    return this.citiesResource.value();
   });
 
   statesResource = rxResource({
@@ -44,9 +71,5 @@ export class StepPersonal {
   goToProfissional() {
     console.log('Personal Value:', this._curriculumFormStore.personalFormGroup.value);
     this._router.navigate(['/professional']);
-  }
-
-  updateSelect() {
-    this._curriculumFormStore.personalFormGroup.get('state')?.setValue('Amapá');
   }
 }

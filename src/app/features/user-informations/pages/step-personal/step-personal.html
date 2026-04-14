@@ -11,6 +11,8 @@
         placeholder="Seu nome aqui"
         class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
         formControlName="name"
+        appInputValidation
+        errorMessage="O Campo nome é obrigatório"
       />
     </div>
 
@@ -82,8 +84,9 @@
           formControlName="city"
         >
           <option disabled selected>Selecione</option>
-          <option value="Capital">Capital</option>
-          <option value="Interior">Interior</option>
+          @for (city of citiesList(); track city) {
+            <option [value]="city">{{ city }}</option>
+          }
         </select>
         <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500">
           <svg
@@ -175,6 +178,3 @@
     </button>
   </div>
 </form>
-
-<button (click)="updateSelect()">ATUALIZAR</button>
-<p>{{ testeState() }}</p>
