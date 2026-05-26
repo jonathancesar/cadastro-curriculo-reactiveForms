@@ -1,23 +1,31 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CurriculumFormStore } from '../../../../core/services/curriculum-form-store';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-step-professional',
-  imports: [RouterLink],
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './step-professional.html',
 })
 export class StepProfessional {
-  experiences = signal<{ id: number }[]>([{ id: Date.now() }]);
+  readonly _curriculumFormStore = inject(CurriculumFormStore);
 
   addExperience() {
-    this.experiences.update((list) => [...list, { id: Date.now() }]);
+    this._curriculumFormStore.professionalFormArray.push(
+      new FormGroup({
+        position: new FormControl('', [Validators.required]),
+        company: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required]),
+      }),
+    );
   }
 
-  removeExperience(id: number) {
-    this.experiences.update((list) => list.filter((item) => item.id !== id));
+  removeExperience(index: number) {
+    this._curriculumFormStore.professionalFormArray.removeAt(index);
   }
 
   submit() {
-    alert('🚀 Currículo enviado para a órbita!');
+    console.log(this._curriculumFormStore.professionalFormArray.value);
   }
 }
