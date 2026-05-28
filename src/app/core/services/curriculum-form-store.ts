@@ -15,14 +15,21 @@ export class CurriculumFormStore {
       city: new FormControl('', [Validators.required]),
       maritalStatus: new FormControl('', [Validators.required]),
     }),
-    professional: new FormArray([
-      new FormGroup({
-        position: new FormControl('', [Validators.required]),
-        company: new FormControl('', [Validators.required]),
-        description: new FormControl('', [Validators.required]),
-      }),
-    ]),
+    professional: new FormArray(
+      [
+        new FormGroup({
+          position: new FormControl('', [Validators.required]),
+          company: new FormControl('', [Validators.required]),
+          description: new FormControl('', [Validators.required]),
+        }),
+      ],
+      [Validators.required],
+    ),
   });
+
+  get curriculumFormGroup() {
+    return this.curriculumForm;
+  }
 
   get personalFormGroup() {
     return this.curriculumForm.get('personal') as FormGroup;
