@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CurriculumFormStore } from '../../../../core/services/curriculum-form-store';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputValidationDirective } from '../../../../shared/directives/input-validation-directive';
@@ -13,6 +13,7 @@ import { map, tap } from 'rxjs';
 })
 export class StepProfessional {
   readonly _curriculumFormStore = inject(CurriculumFormStore);
+  private readonly _router = inject(Router);
 
   professionalArrayControls = toSignal(
     this._curriculumFormStore.professionalFormArray.valueChanges.pipe(
@@ -37,7 +38,7 @@ export class StepProfessional {
     this._curriculumFormStore.professionalFormArray.removeAt(index);
   }
 
-  submit() {
-    console.log(this._curriculumFormStore.professionalFormArray.value);
+  goToResume() {
+    this._router.navigate(['/resume-informations']);
   }
 }

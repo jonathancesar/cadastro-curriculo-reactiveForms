@@ -41,4 +41,15 @@ export class CurriculumFormStore {
   get professionalFormArray() {
     return this.curriculumForm.get('professional') as unknown as FormArray;
   }
+
+  resetProfessionalFormArray() {
+    this.professionalFormArray.clear();
+    this.professionalFormArray.push(
+      new FormGroup({
+        position: new FormControl('', [Validators.required]),
+        company: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required]),
+      }),
+    );
+  }
 }
