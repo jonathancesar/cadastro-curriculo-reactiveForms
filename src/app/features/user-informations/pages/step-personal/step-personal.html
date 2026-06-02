@@ -25,6 +25,11 @@
         formControlName="email"
         appInputValidation
         errorMessage="O Campo E-mail é obrigatório"
+        [errorMessage]="
+          _curriculumFormStore.personalFormGroup.get('email')?.hasError('email')
+            ? 'O campo E-mail não está preenchido corretamente'
+            : 'O campo E-mail é obrigatório'
+        "
       />
     </div>
 
@@ -36,7 +41,11 @@
         class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
         formControlName="age"
         appInputValidation
-        errorMessage="O Campo Idade é obrigatório"
+        [errorMessage]="
+          _curriculumFormStore.personalFormGroup.get('age')?.hasError('min')
+            ? 'O campo Idade deve ser no mínimo 18 anos'
+            : 'O campo Idade é obrigatório'
+        "
       />
     </div>
 
@@ -48,7 +57,11 @@
         class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-3 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
         formControlName="address"
         appInputValidation
-        errorMessage="O Campo Endereço é obrigatório"
+        [errorMessage]="
+          _curriculumFormStore.personalFormGroup.get('addres')?.hasError('pattern')
+            ? 'Endereço deve seguir o padrão: Rua, Número, Bairro'
+            : 'O campo Endereço é obrigatório'
+        "
       />
     </div>
 

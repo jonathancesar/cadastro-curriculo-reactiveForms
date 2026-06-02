@@ -6,6 +6,7 @@ import {
   inject,
   Input,
   Renderer2,
+  SimpleChanges,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgControl } from '@angular/forms';
@@ -29,6 +30,12 @@ export class InputValidationDirective {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['errorMessage'] && this.errorElement) {
+      this._renderer2.setProperty(this.errorElement, 'textContent', this.errorMessage);
+    }
+  }
+
   @HostListener('blur')
   onBlur() {
     this.updateStatus();
@@ -42,6 +49,7 @@ export class InputValidationDirective {
     const isInvalid = control.invalid && control.touched;
 
     if (isInvalid) {
+      console.log('Inválido');
       this.setInvalidStyles();
       this.showError();
     } else {
@@ -84,7 +92,7 @@ export class InputValidationDirective {
 
   showError() {
     if (this.errorElement) return;
-
+    console.log('this.errorMessage:', this.errorMessage);
     //criando parágrafo
     this.errorElement = this._renderer2.createElement('p');
     const text = this._renderer2.createText(this.errorMessage);
